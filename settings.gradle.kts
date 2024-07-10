@@ -23,3 +23,4 @@ rootProject.name = "TestTask"
 include(":app")
 include(":feature:searchresults:impl")
 include(":feature:itemdetails:impl")
+include(":library:network")

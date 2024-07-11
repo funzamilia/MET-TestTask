@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlinAndroidKsp)
     alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -44,6 +45,8 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
+    implementation(libs.retrofit.converter.kotlinx)
+    implementation(libs.kotlinx.serialization)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

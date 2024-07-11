@@ -7,5 +7,5 @@ import retrofit2.http.Query
 
 interface SearchResultsApi {
     @GET("search")
-    fun getQueryResults(@Query("q") q: String): Response<SearchResults>
+    suspend fun getQueryResults(@Query("q") q: String): Response<SearchResults>
 }

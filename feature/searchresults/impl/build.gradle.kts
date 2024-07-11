@@ -3,6 +3,7 @@ plugins {
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlinAndroidKsp)
     alias(libs.plugins.hiltAndroid)
+    alias(libs.plugins.compose.compiler)
 }
 
 android {
@@ -32,6 +33,9 @@ android {
     kotlinOptions {
         jvmTarget = "1.8"
     }
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
@@ -39,8 +43,13 @@ dependencies {
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.appcompat)
     implementation(libs.material)
+    implementation(libs.androidx.fragment.ktx)
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.lifecycle.viewmodel.android)
+    implementation(libs.androidx.ui.android)
+    implementation(libs.androidx.material3.android)
+    implementation(libs.androidx.lifecycle.runtime.compose.android)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

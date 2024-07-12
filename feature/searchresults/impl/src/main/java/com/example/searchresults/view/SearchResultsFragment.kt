@@ -80,7 +80,7 @@ class SearchResultsFragment : Fragment() {
                                     style = MaterialTheme.typography.bodyLarge,
                                     modifier = Modifier
                                         .fillMaxWidth()
-                                        .padding(4.dp),
+                                        .padding(vertical = 20.dp),
                                 )
                             }
                         }

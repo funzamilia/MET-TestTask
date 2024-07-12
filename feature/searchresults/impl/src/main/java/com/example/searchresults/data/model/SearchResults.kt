@@ -1,3 +1,6 @@
 package com.example.searchresults.data.model
 
-data class SearchResults(val total: String, val objectIDs: List<String>)
+import kotlinx.serialization.Serializable
+
+@Serializable
+data class SearchResults(val total: Int, val objectIDs: List<Int>?)

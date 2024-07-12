@@ -4,6 +4,7 @@ plugins {
     alias(libs.plugins.kotlinAndroidKsp)
     alias(libs.plugins.hiltAndroid)
     alias(libs.plugins.compose.compiler)
+    alias(libs.plugins.serialization)
 }
 
 android {
@@ -57,6 +58,13 @@ dependencies {
 
     // Retrofit
     implementation(libs.retrofit)
+
+    // Navigation
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
+
+    // Serialization
+    implementation(libs.kotlinx.serialization)
 
     ksp(libs.hilt.compiler)
 }

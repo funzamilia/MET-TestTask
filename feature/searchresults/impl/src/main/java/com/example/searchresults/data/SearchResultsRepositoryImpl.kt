@@ -6,7 +6,7 @@ import javax.inject.Inject
 class SearchResultsRepositoryImpl @Inject constructor(
     private val searchResultsRemoteDataSource: SearchResultsRemoteDataSource,
 ) : SearchResultsRepository {
-    override suspend fun getQueryResults(query: String): List<String> {
+    override suspend fun getQueryResults(query: String): List<Int> {
         val result = searchResultsRemoteDataSource.getQueryResults(query).body()
         return result?.objectIDs ?: emptyList()
     }

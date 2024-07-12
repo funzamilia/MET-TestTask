@@ -26,10 +26,15 @@ class SearchResultsViewModel @Inject constructor(
     }
 
     private fun handleSearch(query: String) {
-        _uiState.update { it.copy(isLoading = true) }
+        _uiState.update { it.copy(searchQuery = query, isLoading = true) }
         viewModelScope.launch {
             val queryResult = getQueryResultsUseCase(query)
-            _uiState.value = SearchResultsUiState(results = queryResult, isLoading = false)
+            _uiState.update {
+                it.copy(
+                    results = queryResult.map { it.toString() },
+                    isLoading = false
+                )
+            }
         }
     }
 }

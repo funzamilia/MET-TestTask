@@ -6,7 +6,7 @@ import javax.inject.Inject
 class GetQueryResultsUseCase @Inject constructor(
     private val searchResultsRepository: SearchResultsRepository
 ) {
-    suspend operator fun invoke(query: String): List<String> {
+    suspend operator fun invoke(query: String): List<Int> {
         return searchResultsRepository.getQueryResults(query)
     }
 }

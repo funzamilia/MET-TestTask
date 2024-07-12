@@ -64,6 +64,7 @@ dependencies {
     implementation(libs.androidx.material3)
 
     implementation(libs.hilt.android)
+    implementation(libs.androidx.navigation.fragment.ktx)
 
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
@@ -72,6 +73,13 @@ dependencies {
     androidTestImplementation(libs.androidx.ui.test.junit4)
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
+
+    // Project Feature Modules
+    implementation(project(":feature:searchresults:impl"))
+    implementation(project(":feature:itemdetails:impl"))
+
+    // Project Library Modules
+    implementation(project(":library:network"))
 
     ksp(libs.hilt.compiler)
 }

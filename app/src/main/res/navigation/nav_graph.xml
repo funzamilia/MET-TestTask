@@ -7,5 +7,17 @@
     <fragment
         android:id="@+id/searchResultsFragment"
         android:name="com.example.searchresults.view.SearchResultsFragment"
-        android:label="SearchResultsFragment" />
+        android:label="SearchResultsFragment" >
+        <action
+            android:id="@+id/action_searchResultsFragment_to_itemDetailsFragment"
+            app:destination="@id/itemDetailsFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/itemDetailsFragment"
+        android:name="com.example.itemdetails.view.ItemDetailsFragment"
+        android:label="ItemDetailsFragment" >
+        <argument
+            android:name="itemId"
+            app:argType="string" />
+    </fragment>
 </navigation>

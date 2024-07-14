@@ -7,10 +7,12 @@ import com.example.searchresults.view.model.SearchResultsUiEvent
 import com.example.searchresults.view.model.SearchResultsUiState
 import com.example.searchresults.view.navigation.SearchResultsNavigationEvent
 import dagger.hilt.android.lifecycle.HiltViewModel
+import kotlinx.coroutines.Job
 import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
+import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -18,12 +20,14 @@ import javax.inject.Inject
 class SearchResultsViewModel @Inject constructor(
     private val getQueryResultsUseCase: GetQueryResultsUseCase,
 ) : ViewModel() {
-    private val _uiState =
-        MutableStateFlow<SearchResultsUiState>(SearchResultsUiState.Content(emptyList(), ""))
+    private val _uiState = MutableStateFlow(SearchResultsUiState())
     val uiState: StateFlow<SearchResultsUiState> = _uiState
 
     private val navigationEventsChannel = Channel<SearchResultsNavigationEvent>(Channel.UNLIMITED)
     val navEvents = navigationEventsChannel.receiveAsFlow()
+
+
+    private var searchJob: Job? = null
 
     fun handleUiEvent(event: SearchResultsUiEvent) {
         when (event) {
@@ -33,13 +37,18 @@ class SearchResultsViewModel @Inject constructor(
     }
 
     private fun handleSearch(query: String) {
-        _uiState.value = SearchResultsUiState.Loading(_uiState.value.searchQuery)
-        viewModelScope.launch {
+        searchJob?.cancel()
+
+        _uiState.update { it.copy(searchQuery = query, isLoading = true) }
+
+        searchJob = viewModelScope.launch {
             val queryResult = getQueryResultsUseCase(query)
-            _uiState.value = SearchResultsUiState.Content(
-                results = queryResult.map { it.toString() },
-                searchQuery = query,
-            )
+            _uiState.update { uiState ->
+                uiState.copy(
+                    results = queryResult.map { it.toString() },
+                    isLoading = false
+                )
+            }
         }
     }
 

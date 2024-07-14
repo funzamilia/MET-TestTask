@@ -35,7 +35,6 @@ import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.findNavController
 import com.example.searchresults.view.model.SearchResultsUiEvent
-import com.example.searchresults.view.model.SearchResultsUiState
 import com.example.searchresults.view.navigation.SearchResultsNavigatorFactory
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -63,13 +62,7 @@ class SearchResultsFragment : Fragment() {
                 ) {
                     TextField(
                         value = uiState.searchQuery,
-                        onValueChange = {
-                            viewModel.handleUiEvent(
-                                SearchResultsUiEvent.Search(
-                                    it
-                                )
-                            )
-                        },
+                        onValueChange = { viewModel.handleUiEvent(SearchResultsUiEvent.Search(it)) },
                         placeholder = { Text("Search") },
                         trailingIcon = {
                             Icon(
@@ -84,41 +77,38 @@ class SearchResultsFragment : Fragment() {
                             .background(Color.Transparent)
                             .heightIn(16.dp)
                     )
-                    when (val stableUiState = uiState) {
-                        is SearchResultsUiState.Content -> {
-                            LazyVerticalGrid(
-                                columns = GridCells.Fixed(3),
-                                verticalArrangement = Arrangement.spacedBy(8.dp),
-                                horizontalArrangement = Arrangement.spacedBy(8.dp),
-                                modifier = Modifier.padding(horizontal = 8.dp),
-                            ) {
-                                items(stableUiState.results) { result ->
-                                    Card(
-                                        onClick = {
-                                            viewModel.handleUiEvent(
-                                                SearchResultsUiEvent.ItemClicked(result)
-                                            )
-                                        }
-                                    ) {
-                                        Text(
-                                            text = result,
-                                            textAlign = TextAlign.Center,
-                                            style = MaterialTheme.typography.bodyLarge,
-                                            modifier = Modifier
-                                                .fillMaxWidth()
-                                                .padding(vertical = 20.dp),
+
+                    if (uiState.isLoading) {
+                        Text(
+                            text = "Loading...",
+                            style = MaterialTheme.typography.bodyLarge,
+                            modifier = Modifier.padding(16.dp),
+                        )
+                    } else {
+                        LazyVerticalGrid(
+                            columns = GridCells.Fixed(3),
+                            verticalArrangement = Arrangement.spacedBy(8.dp),
+                            horizontalArrangement = Arrangement.spacedBy(8.dp),
+                            modifier = Modifier.padding(horizontal = 8.dp),
+                        ) {
+                            items(uiState.results) { result ->
+                                Card(
+                                    onClick = {
+                                        viewModel.handleUiEvent(
+                                            SearchResultsUiEvent.ItemClicked(result)
                                         )
                                     }
+                                ) {
+                                    Text(
+                                        text = result,
+                                        textAlign = TextAlign.Center,
+                                        style = MaterialTheme.typography.bodyLarge,
+                                        modifier = Modifier
+                                            .fillMaxWidth()
+                                            .padding(vertical = 20.dp),
+                                    )
                                 }
                             }
-                        }
-
-                        is SearchResultsUiState.Error -> {
-                            Text("Error")
-                        }
-
-                        is SearchResultsUiState.Loading -> {
-                            Text("Loading")
                         }
                     }
                 }

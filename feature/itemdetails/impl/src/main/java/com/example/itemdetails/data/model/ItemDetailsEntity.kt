@@ -65,17 +65,17 @@ data class ItemDetailsEntity(
 
 @Serializable
 data class Constituent(
-    val constituentID: Int,
-    val role: String,
-    val name: String,
-    val constituentULAN_URL: String,
-    val constituentWikidata_URL: String,
-    val gender: String,
+    val constituentID: Int?,
+    val role: String?,
+    val name: String?,
+    val constituentULAN_URL: String?,
+    val constituentWikidata_URL: String?,
+    val gender: String?,
 )
 
 @Serializable
 data class Measurement(
-    val elementName: String,
+    val elementName: String?,
     val elementDescription: String?,
     val elementMeasurements: ElementMeasurements?,
 )
@@ -86,11 +86,12 @@ data class ElementMeasurements(
     val Length: Double? = null,
     val Width: Double? = null,
     val Thickness: Double? = null,
+    val Depth: Double? = null,
 )
 
 @Serializable
 data class Tag(
-    val term: String,
-    val AAT_URL: String,
-    val Wikidata_URL: String,
+    val term: String?,
+    val AAT_URL: String?,
+    val Wikidata_URL: String?,
 )

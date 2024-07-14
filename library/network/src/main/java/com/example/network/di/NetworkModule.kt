@@ -20,6 +20,6 @@ object NetworkModule {
     @Singleton
     fun provideRetrofit(baseUrl: String): Retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
-        .addConverterFactory(Json.asConverterFactory(MediaType.get("application/json; charset=UTF8")))
+        .addConverterFactory(Json{ignoreUnknownKeys = true}.asConverterFactory(MediaType.get("application/json; charset=UTF8")))
         .build()
 }

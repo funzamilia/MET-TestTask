@@ -11,7 +11,6 @@ import kotlinx.coroutines.channels.Channel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.StateFlow
 import kotlinx.coroutines.flow.receiveAsFlow
-import kotlinx.coroutines.flow.update
 import kotlinx.coroutines.launch
 import javax.inject.Inject
 
@@ -19,7 +18,8 @@ import javax.inject.Inject
 class SearchResultsViewModel @Inject constructor(
     private val getQueryResultsUseCase: GetQueryResultsUseCase,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(SearchResultsUiState())
+    private val _uiState =
+        MutableStateFlow<SearchResultsUiState>(SearchResultsUiState.Content(emptyList(), ""))
     val uiState: StateFlow<SearchResultsUiState> = _uiState
 
     private val navigationEventsChannel = Channel<SearchResultsNavigationEvent>(Channel.UNLIMITED)
@@ -33,15 +33,13 @@ class SearchResultsViewModel @Inject constructor(
     }
 
     private fun handleSearch(query: String) {
-        _uiState.update { it.copy(searchQuery = query, isLoading = true) }
+        _uiState.value = SearchResultsUiState.Loading(_uiState.value.searchQuery)
         viewModelScope.launch {
             val queryResult = getQueryResultsUseCase(query)
-            _uiState.update { uiState ->
-                uiState.copy(
-                    results = queryResult.map { it.toString() },
-                    isLoading = false
-                )
-            }
+            _uiState.value = SearchResultsUiState.Content(
+                results = queryResult.map { it.toString() },
+                searchQuery = query,
+            )
         }
     }
 

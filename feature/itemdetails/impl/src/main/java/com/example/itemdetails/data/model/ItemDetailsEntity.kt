@@ -12,7 +12,7 @@ data class ItemDetailsEntity(
     val primaryImage: String,
     val primaryImageSmall: String,
     val additionalImages: List<String>,
-    val constituents: List<Constituent>,
+    val constituents: List<Constituent>?,
     val department: String,
     val objectName: String,
     val title: String,
@@ -38,7 +38,7 @@ data class ItemDetailsEntity(
     val objectEndDate: Int,
     val medium: String,
     val dimensions: String,
-    val measurements: List<Measurement>,
+    val measurements: List<Measurement>?,
     val creditLine: String,
     val geographyType: String,
     val city: String,
@@ -57,7 +57,7 @@ data class ItemDetailsEntity(
     val metadataDate: String,
     val repository: String,
     val objectURL: String,
-    val tags: List<Tag>,
+    val tags: List<Tag>?,
     val objectWikidata_URL: String,
     val isTimelineWork: Boolean,
     val GalleryNumber: String
@@ -77,14 +77,15 @@ data class Constituent(
 data class Measurement(
     val elementName: String,
     val elementDescription: String?,
-    val elementMeasurements: ElementMeasurements,
+    val elementMeasurements: ElementMeasurements?,
 )
 
 @Serializable
 data class ElementMeasurements(
-    val Height: Double,
-    val Length: Double,
-    val Width: Double,
+    val Height: Double? = null,
+    val Length: Double? = null,
+    val Width: Double? = null,
+    val Thickness: Double? = null,
 )
 
 @Serializable

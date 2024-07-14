@@ -15,7 +15,7 @@ class ItemDetailsEntityToDomainMapper @Inject constructor() {
             primaryImage = entity.primaryImage,
             primaryImageSmall = entity.primaryImageSmall,
             additionalImages = entity.additionalImages,
-            constituents = entity.constituents,
+            constituents = entity.constituents ?: emptyList(),
             department = entity.department,
             objectName = entity.objectName,
             title = entity.title,

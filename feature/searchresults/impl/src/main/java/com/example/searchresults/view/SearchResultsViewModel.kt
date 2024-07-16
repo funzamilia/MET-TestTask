@@ -47,7 +47,8 @@ class SearchResultsViewModel @Inject constructor(
                 queryResult?.let { queryResult ->
                     uiState.copy(
                         results = queryResult.map { it.toString() },
-                        isLoading = false
+                        isLoading = false,
+                        isError = false,
                     )
                 } ?: uiState.copy(
                     results = emptyList(),

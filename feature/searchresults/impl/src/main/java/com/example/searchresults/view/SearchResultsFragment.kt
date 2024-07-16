@@ -4,8 +4,8 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
@@ -19,12 +19,13 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Search
 import androidx.compose.material3.Card
 import androidx.compose.material3.Icon
+import androidx.compose.material3.LinearProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextField
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.platform.ViewCompositionStrategy
 import androidx.compose.ui.text.style.TextAlign
@@ -72,41 +73,90 @@ class SearchResultsFragment : Fragment() {
                         },
                         modifier = Modifier.fillMaxWidth(),
                     )
-                    Spacer(
-                        modifier = Modifier
-                            .background(Color.Transparent)
-                            .heightIn(16.dp)
-                    )
 
-                    if (uiState.isLoading) {
-                        Text(
-                            text = "Loading...",
-                            style = MaterialTheme.typography.bodyLarge,
-                            modifier = Modifier.padding(16.dp),
-                        )
-                    } else {
-                        LazyVerticalGrid(
-                            columns = GridCells.Fixed(3),
-                            verticalArrangement = Arrangement.spacedBy(8.dp),
-                            horizontalArrangement = Arrangement.spacedBy(8.dp),
-                            modifier = Modifier.padding(horizontal = 8.dp),
-                        ) {
-                            items(uiState.results) { result ->
-                                Card(
-                                    onClick = {
-                                        viewModel.handleUiEvent(
-                                            SearchResultsUiEvent.ItemClicked(result)
+                    when {
+                        uiState.isLoading -> {
+                            Box(
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(top = 48.dp)
+                            ) {
+                                LinearProgressIndicator(modifier = Modifier.align(Alignment.Center))
+                            }
+                        }
+
+                        uiState.isError -> {
+                            Text(
+                                text = "Error",
+                                style = MaterialTheme.typography.bodyLarge,
+                                modifier = Modifier.padding(16.dp),
+                            )
+                        }
+
+                        uiState.searchQuery.isEmpty() -> {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                            ) {
+                                Text(
+                                    text = "Please start typing",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.align(Alignment.Center),
+                                )
+                            }
+                        }
+
+                        uiState.searchQuery.isNotEmpty() && uiState.results.isEmpty() -> {
+                            Box(
+                                modifier = Modifier.fillMaxSize(),
+                            ) {
+                                Text(
+                                    text = "No matching results found",
+                                    style = MaterialTheme.typography.bodyLarge,
+                                    modifier = Modifier.align(Alignment.Center),
+                                )
+                            }
+                        }
+
+                        else -> {
+                            LazyVerticalGrid(
+                                columns = GridCells.Fixed(3),
+                                verticalArrangement = Arrangement.spacedBy(8.dp),
+                                horizontalArrangement = Arrangement.spacedBy(8.dp),
+                                modifier = Modifier.padding(horizontal = 8.dp),
+                            ) {
+                                repeat(3) {
+                                    item {
+                                        Spacer(
+                                            modifier = Modifier
+                                                .heightIn(16.dp)
                                         )
                                     }
-                                ) {
-                                    Text(
-                                        text = result,
-                                        textAlign = TextAlign.Center,
-                                        style = MaterialTheme.typography.bodyLarge,
-                                        modifier = Modifier
-                                            .fillMaxWidth()
-                                            .padding(vertical = 20.dp),
-                                    )
+                                }
+                                items(uiState.results) { result ->
+                                    Card(
+                                        onClick = {
+                                            viewModel.handleUiEvent(
+                                                SearchResultsUiEvent.ItemClicked(result)
+                                            )
+                                        }
+                                    ) {
+                                        Text(
+                                            text = result,
+                                            textAlign = TextAlign.Center,
+                                            style = MaterialTheme.typography.bodyLarge,
+                                            modifier = Modifier
+                                                .fillMaxWidth()
+                                                .padding(vertical = 20.dp),
+                                        )
+                                    }
+                                }
+                                repeat(3) {
+                                    item {
+                                        Spacer(
+                                            modifier = Modifier
+                                                .heightIn(16.dp)
+                                        )
+                                    }
                                 }
                             }
                         }

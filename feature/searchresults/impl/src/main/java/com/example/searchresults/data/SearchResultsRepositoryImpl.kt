@@ -9,7 +9,14 @@ class SearchResultsRepositoryImpl @Inject constructor(
 ) : SearchResultsRepository {
     override suspend fun getQueryResults(query: String): List<Int>? {
         return when (val result = searchResultsRemoteDataSource.getQueryResults(query)) {
-            is NetworkResponse.Success -> result.body.objectIDs
+            is NetworkResponse.Success -> {
+                if (result.body.total == 0) {
+                    emptyList()
+                } else {
+                    result.body.objectIDs
+                }
+            }
+
             else -> null
         }
     }

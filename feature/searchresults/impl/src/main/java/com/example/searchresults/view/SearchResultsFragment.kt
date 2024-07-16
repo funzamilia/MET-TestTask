@@ -85,32 +85,12 @@ class SearchResultsFragment : Fragment() {
                             }
                         }
 
-                        uiState.isError -> {
-                            Text(
-                                text = "Error",
-                                style = MaterialTheme.typography.bodyLarge,
-                                modifier = Modifier.padding(16.dp),
-                            )
-                        }
-
-                        uiState.searchQuery.isEmpty() -> {
+                        uiState.displayMessage.isNotEmpty() -> {
                             Box(
                                 modifier = Modifier.fillMaxSize(),
                             ) {
                                 Text(
-                                    text = "Please start typing",
-                                    style = MaterialTheme.typography.bodyLarge,
-                                    modifier = Modifier.align(Alignment.Center),
-                                )
-                            }
-                        }
-
-                        uiState.searchQuery.isNotEmpty() && uiState.results.isEmpty() -> {
-                            Box(
-                                modifier = Modifier.fillMaxSize(),
-                            ) {
-                                Text(
-                                    text = "No matching results found",
+                                    text = uiState.displayMessage,
                                     style = MaterialTheme.typography.bodyLarge,
                                     modifier = Modifier.align(Alignment.Center),
                                 )

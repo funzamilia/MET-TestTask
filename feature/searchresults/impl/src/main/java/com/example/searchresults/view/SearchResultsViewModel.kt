@@ -19,8 +19,9 @@ import javax.inject.Inject
 @HiltViewModel
 class SearchResultsViewModel @Inject constructor(
     private val getQueryResultsUseCase: GetQueryResultsUseCase,
+    private val uiStateFactory: SearchResultsUiStateFactory,
 ) : ViewModel() {
-    private val _uiState = MutableStateFlow(SearchResultsUiState())
+    private val _uiState = MutableStateFlow(uiStateFactory.createInitialState())
     val uiState: StateFlow<SearchResultsUiState> = _uiState
 
     private val navigationEventsChannel = Channel<SearchResultsNavigationEvent>(Channel.UNLIMITED)
@@ -43,19 +44,7 @@ class SearchResultsViewModel @Inject constructor(
 
         searchJob = viewModelScope.launch {
             val queryResult = getQueryResultsUseCase(query)
-            _uiState.update { uiState ->
-                queryResult?.let { queryResult ->
-                    uiState.copy(
-                        results = queryResult.map { it.toString() },
-                        isLoading = false,
-                        isError = false,
-                    )
-                } ?: uiState.copy(
-                    results = emptyList(),
-                    isLoading = false,
-                    isError = true,
-                )
-            }
+            _uiState.value = uiStateFactory.createUiState(queryResult, query)
         }
     }
 

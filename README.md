@@ -1,7 +1,5 @@
 Ideas:
-- Seperate data and domain models
-- Cancel job on new search
-- Remove fragment xmls
+- Seperate domain and view models
 - Empty & Loading screens
 - Handle Error response
 - Pull out Composables

@@ -1,5 +1,6 @@
 package com.example.network.di
 
+import com.example.network.NetworkResponseAdapterFactory
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -18,8 +19,17 @@ object NetworkModule {
 
     @Provides
     @Singleton
-    fun provideRetrofit(baseUrl: String): Retrofit = Retrofit.Builder()
+    fun providesJson(): Json = Json { ignoreUnknownKeys = true }
+
+    @Provides
+    @Singleton
+    fun provideRetrofit(
+        baseUrl: String,
+        callAdapterFactory: NetworkResponseAdapterFactory,
+        json: Json,
+    ): Retrofit = Retrofit.Builder()
         .baseUrl(baseUrl)
-        .addConverterFactory(Json{ignoreUnknownKeys = true}.asConverterFactory(MediaType.get("application/json; charset=UTF8")))
+        .addCallAdapterFactory(callAdapterFactory)
+        .addConverterFactory(json.asConverterFactory(MediaType.get("application/json; charset=UTF8")))
         .build()
 }

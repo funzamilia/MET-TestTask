@@ -44,9 +44,15 @@ class SearchResultsViewModel @Inject constructor(
         searchJob = viewModelScope.launch {
             val queryResult = getQueryResultsUseCase(query)
             _uiState.update { uiState ->
-                uiState.copy(
-                    results = queryResult.map { it.toString() },
-                    isLoading = false
+                queryResult?.let { queryResult ->
+                    uiState.copy(
+                        results = queryResult.map { it.toString() },
+                        isLoading = false
+                    )
+                } ?: uiState.copy(
+                    results = emptyList(),
+                    isLoading = false,
+                    isError = true,
                 )
             }
         }

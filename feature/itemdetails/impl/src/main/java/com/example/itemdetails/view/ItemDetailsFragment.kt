@@ -79,19 +79,20 @@ class ItemDetailsFragment : Fragment() {
                                 state = pagerState,
                                 pageSpacing = 8.dp,
                             ) {
-                                AsyncImage(
-                                    model = item.primaryImage,
-                                    contentDescription = "",
-                                    contentScale = ContentScale.Fit,
-                                    placeholder = painterResource(id = R.drawable.chrome_dino),
-                                    error = painterResource(id = R.drawable.chrome_dino),
-                                    modifier = Modifier
-                                        .aspectRatio(1f)
-                                        .fillMaxWidth(),
-                                )
-                                item.additionalImages.forEach {
+                                if (it == 0) {
                                     AsyncImage(
-                                        model = it,
+                                        model = item.primaryImage,
+                                        contentDescription = "",
+                                        contentScale = ContentScale.Fit,
+                                        placeholder = painterResource(id = R.drawable.chrome_dino),
+                                        error = painterResource(id = R.drawable.chrome_dino),
+                                        modifier = Modifier
+                                            .aspectRatio(1f)
+                                            .fillMaxWidth(),
+                                    )
+                                } else if (it >= 1) {
+                                    AsyncImage(
+                                        model = item.additionalImages[it - 1],
                                         contentDescription = "",
                                         contentScale = ContentScale.Fit,
                                         modifier = Modifier

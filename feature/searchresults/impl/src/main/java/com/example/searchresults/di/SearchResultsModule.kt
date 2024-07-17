@@ -3,6 +3,8 @@ package com.example.searchresults.di
 import com.example.searchresults.data.SearchResultsApi
 import com.example.searchresults.data.SearchResultsRepositoryImpl
 import com.example.searchresults.domain.SearchResultsRepository
+import com.example.searchresults.domain.usecase.GetQueryResultsUseCase
+import com.example.searchresults.domain.usecase.GetQueryResultsUseCaseImpl
 import dagger.Binds
 import dagger.Module
 import dagger.Provides
@@ -17,6 +19,11 @@ abstract class SearchResultsModule {
     abstract fun bindSearchResultsRepository(
         impl: SearchResultsRepositoryImpl
     ): SearchResultsRepository
+
+    @Binds
+    abstract fun bindGetQueryResultsUseCase(
+        impl: GetQueryResultsUseCaseImpl
+    ): GetQueryResultsUseCase
 
     companion object {
         @Provides

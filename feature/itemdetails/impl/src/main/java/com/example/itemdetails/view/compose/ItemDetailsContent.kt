@@ -25,6 +25,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.semantics.clearAndSetSemantics
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.itemdetails.R
@@ -40,11 +41,12 @@ fun ItemDetailsContent(uiState: ItemDetailsUiState.Content) {
     Column {
         Text(
             stringResource(R.string.item_details_item_id_template, item.objectID),
-            modifier = Modifier.padding(16.dp),
+            modifier = Modifier.padding(16.dp).clearAndSetSemantics {  },
         )
         HorizontalPager(
             state = pagerState,
             pageSpacing = 8.dp,
+            modifier = Modifier.clearAndSetSemantics {  },
         ) {
             if (it == 0) {
                 AsyncImage(

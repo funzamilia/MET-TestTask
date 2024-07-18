@@ -1,12 +1,16 @@
 package com.example.searchresults.view
 
+import com.example.core.util.ResourceLoader
+import com.example.searchresults.R
 import com.example.searchresults.view.model.SearchResultsUiState
 import javax.inject.Inject
 
-class SearchResultsUiStateFactory @Inject constructor() {
+class SearchResultsUiStateFactory @Inject constructor(
+    private val resourceLoader: ResourceLoader,
+) {
     fun createInitialState(): SearchResultsUiState {
         return SearchResultsUiState(
-            displayMessage = "Please start typing"
+            displayMessage = resourceLoader.getString(R.string.search_results_please_start_typing)
         )
     }
 
@@ -25,15 +29,15 @@ class SearchResultsUiStateFactory @Inject constructor() {
             results = emptyList(),
             searchQuery = currentQuery,
             isLoading = false,
-            displayMessage = "There was an error fetching the results",
+            displayMessage = resourceLoader.getString(R.string.search_results_error_fetching_results),
         )
     }
 
     private fun createDisplayMessage(emptyQuery: Boolean, emptyResults: Boolean): String {
         return if (emptyQuery) {
-            "Please start typing"
+            resourceLoader.getString(R.string.search_results_please_start_typing)
         } else if (emptyResults) {
-            "No matching results found"
+            resourceLoader.getString(R.string.search_results_no_matching_results)
         } else ""
     }
 }

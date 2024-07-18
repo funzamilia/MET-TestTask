@@ -76,6 +76,9 @@ dependencies {
     debugImplementation(libs.androidx.ui.tooling)
     debugImplementation(libs.androidx.ui.test.manifest)
 
+    // Core Module
+    implementation(project(":core"))
+
     // Project Feature Modules
     implementation(project(":feature:searchresults:impl"))
     implementation(project(":feature:itemdetails:impl"))

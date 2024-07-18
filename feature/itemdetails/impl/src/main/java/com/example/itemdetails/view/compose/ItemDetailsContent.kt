@@ -24,10 +24,10 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.itemdetails.R
-import com.example.itemdetails.view.TextIfAvailable
 import com.example.itemdetails.view.model.ItemDetailsUiState
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -35,12 +35,11 @@ import com.example.itemdetails.view.model.ItemDetailsUiState
 fun ItemDetailsContent(uiState: ItemDetailsUiState.Content) {
     val item = uiState.item
 
-    val pagerState =
-        rememberPagerState(pageCount = { item.additionalImages.size + 1 })
+    val pagerState = rememberPagerState(pageCount = { item.additionalImages.size + 1 })
 
     Column {
         Text(
-            "Item ID: ${item.objectID}",
+            stringResource(R.string.item_details_item_id_template, item.objectID),
             modifier = Modifier.padding(16.dp),
         )
         HorizontalPager(
@@ -99,20 +98,27 @@ fun ItemDetailsContent(uiState: ItemDetailsUiState.Content) {
                 .padding(16.dp)
                 .verticalScroll(rememberScrollState())
         ) {
-            TextIfAvailable("Title", item.title)
-            TextIfAvailable("Department", item.department)
-            TextIfAvailable("Culture", item.culture)
-            TextIfAvailable("Period", item.period)
-            TextIfAvailable("Dynasty", item.dynasty)
-            TextIfAvailable("Reign", item.reign)
-            TextIfAvailable("Portfolio", item.portfolio)
-            TextIfAvailable("City", item.city)
-            TextIfAvailable("State", item.state)
-            TextIfAvailable("County", item.county)
-            TextIfAvailable("Country", item.country)
-            TextIfAvailable("Region", item.region)
-            TextIfAvailable("Subregion", item.subregion)
-            TextIfAvailable("Locale", item.locale)
+            TextIfAvailable(stringResource(R.string.item_details_title), item.title)
+            TextIfAvailable(stringResource(R.string.item_details_department), item.department)
+            TextIfAvailable(stringResource(R.string.item_details_culture), item.culture)
+            TextIfAvailable(stringResource(R.string.item_details_period), item.period)
+            TextIfAvailable(stringResource(R.string.item_details_dynasty), item.dynasty)
+            TextIfAvailable(stringResource(R.string.item_details_reign), item.reign)
+            TextIfAvailable(stringResource(R.string.item_details_portfolio), item.portfolio)
+            TextIfAvailable(stringResource(R.string.item_details_city), item.city)
+            TextIfAvailable(stringResource(R.string.item_details_state), item.state)
+            TextIfAvailable(stringResource(R.string.item_details_county), item.county)
+            TextIfAvailable(stringResource(R.string.item_details_country), item.country)
+            TextIfAvailable(stringResource(R.string.item_details_region), item.region)
+            TextIfAvailable(stringResource(R.string.item_details_subregion), item.subregion)
+            TextIfAvailable(stringResource(R.string.item_details_locale), item.locale)
         }
+    }
+}
+
+@Composable
+private fun TextIfAvailable(category: String, value: String) {
+    if (value.isNotBlank()) {
+        Text("$category: $value")
     }
 }

@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="search_results_please_start_typing">Please start typing</string>
+    <string name="search_results_error_fetching_results">There was an error fetching the results</string>
+    <string name="search_results_no_matching_results">No matching results found</string>
+</resources>

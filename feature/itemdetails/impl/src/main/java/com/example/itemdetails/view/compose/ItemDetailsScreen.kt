@@ -3,7 +3,9 @@ package com.example.itemdetails.view.compose
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
+import androidx.compose.ui.res.stringResource
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
+import com.example.itemdetails.R
 import com.example.itemdetails.view.ItemDetailsViewModel
 import com.example.itemdetails.view.model.ItemDetailsUiState
 
@@ -17,7 +19,7 @@ fun ItemDetailsScreen(viewModel: ItemDetailsViewModel) {
         }
 
         is ItemDetailsUiState.Loading -> {
-            Text("Loading")
+            Text(stringResource(R.string.item_details_loading))
         }
 
         is ItemDetailsUiState.Error -> {

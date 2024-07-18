@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="item_details_item_id_template">Item ID: %s</string>
+    <string name="item_details_title">Title</string>
+    <string name="item_details_department">Department</string>
+    <string name="item_details_culture">Culture</string>
+    <string name="item_details_period">Period</string>
+    <string name="item_details_dynasty">Dynasty</string>
+    <string name="item_details_reign">Reign</string>
+    <string name="item_details_portfolio">Portfolio</string>
+    <string name="item_details_city">City</string>
+    <string name="item_details_state">State</string>
+    <string name="item_details_county">County</string>
+    <string name="item_details_country">Country</string>
+    <string name="item_details_region">Region</string>
+    <string name="item_details_subregion">Subregion</string>
+    <string name="item_details_locale">Locale</string>
+    <string name="item_details_item_could_not_be_loaded">Item could not be loaded</string>
+    <string name="item_details_no_item_id_found">No item id found</string>
+    <string name="item_details_loading">Loading</string>
+</resources>

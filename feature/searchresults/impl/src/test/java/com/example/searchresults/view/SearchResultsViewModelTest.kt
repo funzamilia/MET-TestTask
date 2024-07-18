@@ -1,5 +1,6 @@
 package com.example.searchresults.view
 
+import com.example.core.util.testdata.ResourceLoaderFake
 import com.example.searchresults.testdata.GetQueryResultsUseCaseFake
 import com.example.searchresults.view.model.SearchResultsUiEvent
 import com.example.searchresults.view.model.SearchResultsUiState
@@ -18,7 +19,7 @@ import org.junit.Test
 @OptIn(ExperimentalCoroutinesApi::class)
 class SearchResultsViewModelTest {
     private val getQueryResultsUseCaseFake = GetQueryResultsUseCaseFake()
-    private val uiStateFactory = SearchResultsUiStateFactory()
+    private val uiStateFactory = SearchResultsUiStateFactory(ResourceLoaderFake().apply { stringToReturn = "" })
 
     private val viewModelUnderTest = SearchResultsViewModel(
         getQueryResultsUseCaseFake,

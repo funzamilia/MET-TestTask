@@ -1,5 +1,6 @@
 package com.example.itemdetails.view
 
+import com.example.core.util.testdata.ResourceLoaderFake
 import com.example.itemdetails.testdata.GetItemDetailsUseCaseFake
 import com.example.itemdetails.testdata.ItemDetailsStub
 import com.example.itemdetails.view.model.ItemDetailsUiState
@@ -31,7 +32,7 @@ class ItemDetailsViewModelTest {
         val itemDetails = ItemDetailsStub()
         getItemDetailsUseCaseFake.result = itemDetails
 
-        val viewModelUnderTest = ItemDetailsViewModel("ID", getItemDetailsUseCaseFake)
+        val viewModelUnderTest = ItemDetailsViewModel("ID", getItemDetailsUseCaseFake, ResourceLoaderFake())
 
         assertEquals(
             ItemDetailsUiState.Content(item = itemDetails),
@@ -43,21 +44,26 @@ class ItemDetailsViewModelTest {
     @Test
     fun `init() should add error to uiState when loading fails`() {
         getItemDetailsUseCaseFake.result = null
+        val expectedMessage = "Item could not be loaded"
+        val resourceLoaderFake = ResourceLoaderFake().apply { stringToReturn = expectedMessage }
 
-        val viewModelUnderTest = ItemDetailsViewModel("ID", getItemDetailsUseCaseFake)
+        val viewModelUnderTest = ItemDetailsViewModel("ID", getItemDetailsUseCaseFake, resourceLoaderFake)
 
         assertEquals(
-            "Item could not be loaded",
+            expectedMessage,
             (viewModelUnderTest.uiState.value as? ItemDetailsUiState.Error)?.exception?.message,
         )
     }
 
     @Test
     fun `init() should add error to uiState when id unavailable`() {
-        val viewModelUnderTest = ItemDetailsViewModel(null, getItemDetailsUseCaseFake)
+        val expectedMessage = "No item id found"
+        val resourceLoaderFake = ResourceLoaderFake().apply { stringToReturn = expectedMessage }
+
+        val viewModelUnderTest = ItemDetailsViewModel(null, getItemDetailsUseCaseFake, resourceLoaderFake)
 
         assertEquals(
-            "No item id found",
+            expectedMessage,
             (viewModelUnderTest.uiState.value as? ItemDetailsUiState.Error)?.exception?.message,
         )
     }

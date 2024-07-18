@@ -52,8 +52,8 @@ fun ItemDetailsContent(uiState: ItemDetailsUiState.Content) {
                     model = item.primaryImage,
                     contentDescription = "",
                     contentScale = ContentScale.Fit,
-                    placeholder = painterResource(id = R.drawable.chrome_dino),
-                    error = painterResource(id = R.drawable.chrome_dino),
+                    placeholder = painterResource(id = R.drawable.ic_image_loading),
+                    error = painterResource(id = R.drawable.ic_image_error),
                     modifier = Modifier
                         .aspectRatio(1f)
                         .fillMaxWidth(),
@@ -63,6 +63,8 @@ fun ItemDetailsContent(uiState: ItemDetailsUiState.Content) {
                     model = item.additionalImages[it - 1],
                     contentDescription = "",
                     contentScale = ContentScale.Fit,
+                    placeholder = painterResource(id = R.drawable.ic_image_loading),
+                    error = painterResource(id = R.drawable.ic_image_error),
                     modifier = Modifier
                         .aspectRatio(1f)
                         .fillMaxWidth(),

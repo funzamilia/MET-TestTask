@@ -1,9 +1,9 @@
 package com.example.searchresults.data
 
-import javax.inject.Inject
+import com.example.network.model.ErrorResponse
+import com.example.network.model.NetworkResponse
+import com.example.searchresults.data.model.SearchResultsEntity
 
-class SearchResultsRemoteDataSource @Inject constructor(
-    private val searchResultsApi: SearchResultsApi,
-) {
-    suspend fun getQueryResults(query: String) = searchResultsApi.getQueryResults(query)
+interface SearchResultsRemoteDataSource {
+    suspend fun getQueryResults(query: String): NetworkResponse<SearchResultsEntity, ErrorResponse>
 }

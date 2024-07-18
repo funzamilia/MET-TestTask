@@ -1,0 +1,58 @@
+package com.example.itemdetails.testdata
+
+import com.example.itemdetails.data.model.Constituent
+import com.example.itemdetails.domain.model.ItemDetails
+
+object ItemDetailsStub {
+    operator fun invoke(
+        objectID: Int = 0,
+        isHighlight: Boolean = false,
+        accessionNumber: String = "ANO",
+        accessionYear: String = "AY",
+        isPublicDomain: Boolean = false,
+        primaryImage: String = "PI",
+        primaryImageSmall: String = "PIS",
+        additionalImages: List<String> = emptyList(),
+        constituents: List<Constituent> = emptyList(),
+        department: String = "D",
+        objectName: String = "ON",
+        title: String = "T",
+        culture: String = "C",
+        period: String = "P",
+        dynasty: String = "D",
+        reign: String = "R",
+        portfolio: String = "P",
+        city: String = "C",
+        state: String = "S",
+        county: String = "C",
+        country: String = "C",
+        region: String = "R",
+        subregion: String = "SR",
+        locale: String = "L",
+    ) = ItemDetails(
+        objectID = objectID,
+        isHighlight = isHighlight,
+        accessionNumber = accessionNumber,
+        accessionYear = accessionYear,
+        isPublicDomain = isPublicDomain,
+        primaryImage = primaryImage,
+        primaryImageSmall = primaryImageSmall,
+        additionalImages = additionalImages,
+        constituents = constituents,
+        department = department,
+        objectName = objectName,
+        title = title,
+        culture = culture,
+        period = period,
+        dynasty = dynasty,
+        reign = reign,
+        portfolio = portfolio,
+        city = city,
+        state = state,
+        county = county,
+        country = country,
+        region = region,
+        subregion = subregion,
+        locale = locale,
+    )
+}

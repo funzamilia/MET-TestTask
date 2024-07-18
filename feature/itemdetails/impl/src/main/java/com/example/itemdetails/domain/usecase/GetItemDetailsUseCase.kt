@@ -1,10 +1,7 @@
 package com.example.itemdetails.domain.usecase
 
-import com.example.itemdetails.domain.ItemDetailsRepository
-import javax.inject.Inject
+import com.example.itemdetails.domain.model.ItemDetails
 
-class GetItemDetailsUseCase @Inject constructor(
-    private val itemDetailsRepository: ItemDetailsRepository,
-) {
-    suspend operator fun invoke(objectId: String) = itemDetailsRepository.getItemDetails(objectId)
+interface GetItemDetailsUseCase {
+    suspend operator fun invoke(objectId: String): ItemDetails?
 }

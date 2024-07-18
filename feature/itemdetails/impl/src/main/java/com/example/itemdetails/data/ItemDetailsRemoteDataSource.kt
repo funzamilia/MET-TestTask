@@ -1,9 +1,9 @@
 package com.example.itemdetails.data
 
-import javax.inject.Inject
+import com.example.itemdetails.data.model.ItemDetailsEntity
+import com.example.network.model.ErrorResponse
+import com.example.network.model.NetworkResponse
 
-class ItemDetailsRemoteDataSource @Inject constructor(
-    private val itemDetailsApi: ItemDetailsApi,
-) {
-    suspend fun getItemDetails(objectId: String) = itemDetailsApi.getItemDetails(objectId)
+interface ItemDetailsRemoteDataSource {
+    suspend fun getItemDetails(objectId: String): NetworkResponse<ItemDetailsEntity, ErrorResponse>
 }

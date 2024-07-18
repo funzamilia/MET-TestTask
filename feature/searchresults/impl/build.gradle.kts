@@ -53,6 +53,7 @@ dependencies {
     implementation(libs.androidx.ui.android)
     implementation(libs.androidx.material3.android)
     implementation(libs.androidx.lifecycle.runtime.compose.android)
+    implementation(libs.androidx.ui.tooling.preview.android)
 
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
@@ -71,6 +72,8 @@ dependencies {
 
     // Serialization
     implementation(libs.kotlinx.serialization)
+
+    debugImplementation(libs.ui.tooling)
 
     ksp(libs.hilt.compiler)
 }

@@ -16,6 +16,7 @@ import androidx.compose.foundation.pager.rememberPagerState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.verticalScroll
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -26,9 +27,12 @@ import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.semantics.clearAndSetSemantics
+import androidx.compose.ui.semantics.semantics
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import coil.compose.AsyncImage
 import com.example.itemdetails.R
+import com.example.itemdetails.domain.model.ItemDetails
 import com.example.itemdetails.view.model.ItemDetailsUiState
 
 @OptIn(ExperimentalFoundationApi::class)
@@ -41,12 +45,15 @@ fun ItemDetailsContent(uiState: ItemDetailsUiState.Content) {
     Column {
         Text(
             stringResource(R.string.item_details_item_id_template, item.objectID),
-            modifier = Modifier.padding(16.dp).clearAndSetSemantics {  },
+            style = MaterialTheme.typography.headlineSmall,
+            modifier = Modifier
+                .padding(16.dp)
+                .clearAndSetSemantics { },
         )
         HorizontalPager(
             state = pagerState,
             pageSpacing = 8.dp,
-            modifier = Modifier.clearAndSetSemantics {  },
+            modifier = Modifier.clearAndSetSemantics { },
         ) {
             if (it == 0) {
                 AsyncImage(
@@ -121,6 +128,53 @@ fun ItemDetailsContent(uiState: ItemDetailsUiState.Content) {
 @Composable
 private fun TextIfAvailable(category: String, value: String) {
     if (value.isNotBlank()) {
-        Text("$category: $value")
+        Row(
+            verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.semantics(true) {}
+        ) {
+            Text(
+                "$category: ",
+                style = MaterialTheme.typography.bodyLarge,
+            )
+            Text(
+                value,
+                style = MaterialTheme.typography.bodyMedium,
+            )
+        }
     }
+}
+
+@Preview(showBackground = true)
+@Composable
+private fun ItemDetailsContentPreview() {
+    ItemDetailsContent(
+        ItemDetailsUiState.Content(
+            item = ItemDetails(
+                objectID = 1,
+                isHighlight = false,
+                accessionNumber = "1",
+                accessionYear = "2021",
+                isPublicDomain = false,
+                primaryImage = "",
+                primaryImageSmall = "",
+                additionalImages = emptyList(),
+                constituents = emptyList(),
+                department = "Department",
+                objectName = "Object Name",
+                title = "Title",
+                culture = "Culture",
+                period = "Period",
+                dynasty = "Dynasty",
+                reign = "Reign",
+                portfolio = "Portfolio",
+                city = "City",
+                state = "State",
+                county = "County",
+                country = "Country",
+                region = "Region",
+                subregion = "Subregion",
+                locale = "Locale",
+            )
+        )
+    )
 }

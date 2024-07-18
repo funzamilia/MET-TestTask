@@ -57,7 +57,7 @@ fun SearchResultsScreen(
                 ) {
                     Text(
                         text = uiState.displayMessage,
-                        style = MaterialTheme.typography.bodyLarge,
+                        style = MaterialTheme.typography.titleLarge,
                         modifier = Modifier.align(Alignment.Center),
                     )
                 }
